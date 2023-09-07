@@ -1,0 +1,1 @@
+import * as Partten from '@/constant/Field';
