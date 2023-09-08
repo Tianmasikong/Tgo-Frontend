@@ -1,12 +1,10 @@
-import {createRouter, createWebHashHistory} from "vue-router";
-
-const Home = () => import("../views/Hello.vue")
+import {createRouter, createWebHashHistory} from "vue-router";const Main = () => import("../views/Main.vue")
 const Login = () => import("../views/user/Login.vue")
 
 const routes = [
     {
         path: "/",
-        component: Home
+        component: Main
     },
     {
         path: "/login",
@@ -25,7 +23,7 @@ router.beforeEach((to,from,next)=>{
         next();
     } else {
         //其他路径，先判断本地是否存在Token，存在则正常跳转，否则重定向到login界面
-        let token = sessionStorage.getItem('token');
+        let token = sessionStorage.getItem('userToken');
         if(!token){
             next('/login');
         }

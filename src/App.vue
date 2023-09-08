@@ -3,5 +3,27 @@
     <router-view/>
   </div>
 </template>
-<script> export default { name: 'App' } </script>
-<style> #app { font-family: 'Avenir', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-align: center; color: #2c3e50; margin: -8px -8px auto; } </style>
+
+<script>
+export default {
+  name: 'App'
+}
+</script>
+
+<style>
+html {
+  height: 100%
+}
+body {
+  height: 100%;
+}
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin: -8px -8px auto;
+  height: 100%;
+}
+</style>

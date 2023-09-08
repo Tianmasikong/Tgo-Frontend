@@ -2,7 +2,7 @@ import Axios from "axios";
 import Router from "../router";
 
 const instanceNormal = () => {
-    let token = sessionStorage.getItem("token");
+    let token = sessionStorage.getItem("userToken");
     let headers = token ? {
         "token": token
     } : {};
@@ -23,9 +23,9 @@ const _get = (url, config) => {
             if(!url.startsWith("/api/user")){
                 const token = res.headers.token;
                 if (token) {
-                    sessionStorage.setItem('token',token);
+                    sessionStorage.setItem('userToken',token);
                 } else {
-                    sessionStorage.removeItem('token');
+                    sessionStorage.removeItem('userToken');
                     Router.push('/login');
                 }
             }
@@ -44,10 +44,11 @@ const _post = (url, config) => {
             // console.log(url)
             if(!url.startsWith("/api/user")){
                 const token = res.headers.token;
+                console.log(token)
                 if (token) {
-                    sessionStorage.setItem('token',token);
+                    sessionStorage.setItem('userToken',token);
                 } else {
-                    sessionStorage.removeItem('token');
+                    sessionStorage.removeItem('userToken');
                     Router.push('/login');
                 }
             }
@@ -66,9 +67,9 @@ const _delete = (url, config) => {
             if(!url.startsWith("/api/user")){
                 const token = res.headers.token;
                 if (token) {
-                    sessionStorage.setItem('token',token);
+                    sessionStorage.setItem('userToken',token);
                 } else {
-                    sessionStorage.removeItem('token');
+                    sessionStorage.removeItem('userToken');
                     Router.push('/login');
                 }
             }
@@ -87,9 +88,9 @@ const _put = (url, config) => {
             if(!url.startsWith("/api/user")){
                 const token = res.headers.token;
                 if (token) {
-                    sessionStorage.setItem('token',token);
+                    sessionStorage.setItem('userToken',token);
                 } else {
-                    sessionStorage.removeItem('token');
+                    sessionStorage.removeItem('userToken');
                     Router.push('/login');
                 }
             }
