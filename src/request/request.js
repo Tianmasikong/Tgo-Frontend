@@ -14,16 +14,18 @@ const instanceNormal = () => {
         headers
     });
 }
+// 添加请求拦截器
 
 const _get = (url, config) => {
+    console
     return new Promise((resolve, reject) => {
         instanceNormal()
         .get(url, config)
         .then(res => {
-            if(!url.startsWith("/api/user")){
+            if(!url.startsWith("/api/user") && !url.startsWith("/cloudMusic")){
                 const token = res.headers.token;
                 if (token) {
-                    sessionStorage.setItem('userToken',token);
+                    sessionStorage.setItem('userToken', token);
                 } else {
                     sessionStorage.removeItem('userToken');
                     Router.push('/login');

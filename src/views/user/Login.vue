@@ -10,10 +10,16 @@
       <div class="inputInner">
         <el-form :model="form" label-position="top">
           <el-form-item label="Username">
-            <el-input v-model="form.name" />
+            <el-input
+                v-model="form.name"
+            />
           </el-form-item>
           <el-form-item label="Password">
-            <el-input v-model="form.password" />
+            <el-input
+                type="password"
+                show-password
+                v-model="form.password"
+            />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">Login</el-button>
