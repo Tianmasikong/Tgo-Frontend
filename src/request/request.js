@@ -44,9 +44,8 @@ const _post = (url, config) => {
         .post(url, config)
         .then(res => {
             // console.log(url)
-            if(!url.startsWith("/api/user")){
+            if(!url.startsWith("/api/user") && !url.startsWith("/cloudMusic")){
                 const token = res.headers.token;
-                console.log(token)
                 if (token) {
                     sessionStorage.setItem('userToken',token);
                 } else {

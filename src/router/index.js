@@ -2,6 +2,7 @@ import {createRouter, createWebHashHistory} from "vue-router";
 const Main = () => import("../views/Main.vue")
 const Login = () => import("../views/user/Login.vue")
 const CloudMusicManage = () => import("../views/account/CloudMusicManage.vue")
+const ListenTogether = () => import("../views/listentogether/ListenTogether.vue")
 
 const routes = [
     {
@@ -15,6 +16,10 @@ const routes = [
     {
         path: "/cloudmusicmanage",
         component: CloudMusicManage
+    },
+    {
+        path: "/listentgo",
+        component: ListenTogether
     }
 ]
 

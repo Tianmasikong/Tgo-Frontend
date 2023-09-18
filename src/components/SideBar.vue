@@ -13,7 +13,7 @@
       >
         <el-sub-menu index="1">
           <template #title>
-            <el-icon><location /></el-icon>
+            <el-icon><userFilled /></el-icon>
             <span>我的账号</span>
           </template>
           <el-menu-item index="1-1" route="/cloudmusicmanage">
@@ -21,17 +21,17 @@
             网易云账号
           </el-menu-item>
         </el-sub-menu>
-        <el-menu-item index="2">
-          <el-icon><compass/></el-icon>
-          <span>Navigator Two</span>
+        <el-menu-item index="2" route="/listentgo">
+          <el-icon><headset/></el-icon>
+          <span>一起听</span>
         </el-menu-item>
         <el-menu-item index="3" disabled>
           <el-icon><document /></el-icon>
-          <span>Navigator Three</span>
+          <span>测试</span>
         </el-menu-item>
-        <el-menu-item index="4">
+        <el-menu-item index="4" disabled>
           <el-icon><setting /></el-icon>
-          <span>Navigator Four</span>
+          <span>测试</span>
         </el-menu-item>
       </el-menu>
     </el-col>
@@ -39,11 +39,11 @@
 </template>
 <script>
 import {defineComponent} from 'vue'
-import {Document, Setting, Location, Compass, MostlyCloudy} from "@element-plus/icons-vue";
+import {Document, Setting,MostlyCloudy, UserFilled, Headset} from "@element-plus/icons-vue";
 
 export default defineComponent({
   name: "SideBar",
-  components: {MostlyCloudy, Compass, Setting, Document, Location},
+  components: {Headset, UserFilled, MostlyCloudy,Setting, Document},
 
 })
 </script>

@@ -8,12 +8,54 @@
         <div>
           <el-text size="large">CloudMusicManage</el-text>
         </div>
-        <div style="margin-top:10%">
+        <div style="margin-top:5%">
           <el-text>当前登陆状态:</el-text>
           <el-text :type="loginStateType">{{loginState}}</el-text>
-          <el-button v-show="islogin">登出</el-button>
-          <el-button v-show="!islogin" @click="login">去登陆</el-button>
+          <el-button v-show="islogin" @click="logout">登出</el-button>
+          <el-tooltip content="如果二维码登陆失效，请使用其他登陆方式" placement="bottom" effect="light">
+            <el-button v-show="!islogin" @click="loginWithQR">二维码登陆</el-button>
+          </el-tooltip>
+          <el-button v-show="!islogin" @click="loginWithPasswordShow = true">验证码登陆</el-button>
         </div>
+        <el-dialog v-model="loginWithPasswordShow" title="手机验证码登陆">
+          <el-form :model="form">
+            <el-form-item label="手机号" label-width='140px'>
+              <el-input v-model="form.phoneNum" autocomplete="off" />
+            </el-form-item>
+            <el-form-item label="验证码" label-width='140px'>
+              <el-input v-model="form.captcha"
+                        autocomplete="off">
+                <template #append>
+                  <el-button type="primary" size="small" v-show="!codeShow" @click="sendCaptcha">获取验证码</el-button>
+                  <el-button type="primary" size="small" disabled v-show="codeShow">{{count}}秒后重试</el-button>
+                </template>
+              </el-input>
+            </el-form-item>
+          </el-form>
+          <template #footer>
+            <span class="dialog-footer">
+              <el-button @click="loginWithPasswordShow = false">Cancel</el-button>
+              <el-button type="primary" @click="loginWithPassword">
+                Confirm
+              </el-button>
+            </span>
+          </template>
+        </el-dialog>
+        <el-col :span="8" :offset="8" v-show="user.profile.avatarUrl!==''">
+          <el-card>
+          <img
+              :src="user.profile.avatarUrl"
+              class="image"
+              alt="404"
+          />
+          <div style="padding: 14px">
+            <span>{{ user.profile.nickname }}</span>
+            <div class="bottom">
+              <el-button text class="button">您</el-button>
+            </div>
+          </div>
+        </el-card>
+        </el-col>
       </el-main>
     </el-container>
   </div>
@@ -23,6 +65,7 @@
 import SideBar from "@/components/SideBar.vue";
 import {defineComponent, h} from "vue";
 import {
+  accountCloudMusicLogout, accountCloudMusicPasswordLogin, accountGetCloudMusicLoginCaptcha,
   accountGetCloudMusicLoginState, accountGetCloudMusicQRLoginImgState,
   accountGetCloudMusicQRLoginImgURL,
   accountGetCloudMusicQRLoginKey
@@ -34,7 +77,7 @@ export default defineComponent({
   name: "CloudMusicManageView",
   components: {SideBar},
   methods:{
-    async login() {
+    async loginWithQR() {
       let config = {
         params: {
           _t: Date.parse(new Date()) / 1000 // 时间戳
@@ -77,10 +120,11 @@ export default defineComponent({
                 else if (statusRes.code === 803) {
                   // 这一步会返回cookie
                   ElMessage({
-                    type: 'warning',
+                    type: 'success',
                     message: '授权登录成功',
                   })
                   localStorage.setItem('cookie', statusRes.cookie)
+                  localStorage.setItem('profile', JSON.stringify(statusRes.profile))
                   router.go(0)
                 }
                 else {
@@ -96,23 +140,127 @@ export default defineComponent({
             },
           }
       )
-    }
+    },
+    async loginWithPassword() {
+      this.loginWithPasswordShow = false;
+      let config = {
+        params: {
+          _t: Date.parse(new Date()) / 1000, // 时间戳
+          captcha: this.form.captcha,
+          phone: this.form.phoneNum
+        }
+      }
+      accountCloudMusicPasswordLogin(config).then(res =>{
+        console.log(res);
+        if (res.data.cookie === null) {
+            // 这一步会返回cookie
+            ElMessage({
+              type: 'warning',
+              message: '登陆失败',
+            })
+
+          }
+          else {
+            ElMessage({
+              type: 'success',
+              message: '登陆成功',
+            })
+            localStorage.setItem('cookie', res.data.cookie);
+            localStorage.setItem('profile',JSON.stringify(res.data.profile));
+            router.go(0)
+          }
+      })
+    },
+    logout() {
+      let config = {
+        params: {
+          _t: Date.parse(new Date()) / 1000 // 时间戳
+        }
+      };
+      accountCloudMusicLogout(config).then(res =>{
+        console.log(res.data.code);
+        if(res.data.code === 200) {
+          ElMessage({
+            type: 'success',
+            message: '退出登录成功',
+          })
+          this.user.profile.avatarUrl=null;
+          localStorage.removeItem("profile");
+          localStorage.removeItem("cookie")
+          router.go(0);
+        } else {
+          ElMessage({
+            type: 'warning',
+            message: '未知错误',
+          })
+        }
+      })
+    },
+    timeDown(time){
+      if(!this.timer) {
+        this.count = Math.ceil((JSON.parse(time) - new Date().getTime())/1000);
+        this.codeShow = true;
+        this.timer = setInterval(() => {
+          if (this.count > 0) {
+            this.count--;
+          } else {
+            this.codeShow = false;
+            clearInterval(this.timer);
+            this.timer = null;
+            sessionStorage.removeItem('EndTime');
+          }
+        },1000)
+      }
+    },
+    async sendCaptcha(){
+      let config = {
+        params : {
+          _t: Date.parse(new Date()) / 1000, // 时间戳
+          phone: this.form.phoneNum
+        }
+      }
+      this.codeShow = true;
+      let clicktime = new Date().getTime() + 60000;
+      sessionStorage.setItem('EndTime',JSON.stringify(clicktime));
+      await accountGetCloudMusicLoginCaptcha(config).then(res => {
+        console.log(res);
+      });
+      let endTime = sessionStorage.getItem('EndTime');
+      if(endTime){
+        this.timeDown(endTime);
+      }
+    },
   },
   data() {
     return {
       loginState : '',
       loginStateType : '',
-      islogin:false
+      islogin:false,
+      loginWithPasswordShow:false,
+      form:{
+        phoneNum:'',
+        captcha:''
+      },
+      count:'',
+      codeShow:false,
+      timer:null,
+      user:{
+        profile:{
+          avatarUrl:'',
+          nickname:''
+        }
+      }
     }
   },
   mounted() {
     let config = {
-      param : {
-        _t: Date.parse(new Date()) / 1000 // 时间戳
+      params : {
+        timestamp: Date.parse(new Date()) / 1000 // 时间戳
       }
     }
     accountGetCloudMusicLoginState(config).then(res => {
       let profile = res.data.data.profile;
+      console.log(profile)
       if( profile === null || profile === undefined) {
           this.loginState = "未登录";
           this.loginStateType = "danger";
@@ -121,8 +269,16 @@ export default defineComponent({
           this.loginState = "已登录";
           this.loginStateType = "success";
           this.islogin = true;
+          this.user.profile = profile;
       }
+
     })
+  },
+  created() {
+    let endTime = sessionStorage.getItem('EndTime');
+    if(endTime){
+      this.timeDown(endTime);
+    }
   }
 })
 </script>
