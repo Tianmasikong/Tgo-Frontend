@@ -27,7 +27,8 @@ export default defineComponent({
       },
       timer:null,
       musicNowTime:0,
-      musicState:''
+      musicState:'',
+      peopleNum:0
     }
   },
   methods: {
@@ -141,6 +142,7 @@ export default defineComponent({
       this.musicState = 'pause';
       this.musicNowTime = 0;
       this.testSongName = 'testSong';
+      this.costPlannedAmountChange('peopleNum','-1');
     },
     enterRoomSubmit() {
       let params = {
@@ -157,6 +159,7 @@ export default defineComponent({
             type: 'success',
             message: '加入成功！'
           });
+          this.costPlannedAmountChange('peopleNum','1');
         } else {
           this.$message({
             type: 'warning',
@@ -189,6 +192,7 @@ export default defineComponent({
               this.songId = res.data.result.musicId;
               this.testSongName = res.data.result.musicName;
               this.songPic = res.data.result.musicPic;
+              this.peopleNum = res.data.result.peopleNum;
             }
           })
         }, 1000)
@@ -238,6 +242,7 @@ export default defineComponent({
         </div>
         <div>
           <el-text v-show="hasRoom||enterRoom">您当前的房间号:{{roomId}}</el-text>
+          <el-text v-show="hasRoom||enterRoom">  当前房间在线人数:{{peopleNum}}</el-text>
         </div>
         <div>
           <el-button v-show="!hasRoom && !enterRoom" @click="createRoom">创建房间</el-button>
