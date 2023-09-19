@@ -17,6 +17,7 @@ export default defineComponent({
       song:'',
       songID:'',
       testSongName:'',
+      songPic:'',
       hasRoom:false,
       enterRoom:false,
       enterRoomShow:false,
@@ -187,14 +188,15 @@ export default defineComponent({
               this.musicState = res.data.result.musicState;
               this.songId = res.data.result.musicId;
               this.testSongName = res.data.result.musicName;
+              this.songPic = res.data.result.musicPic;
             }
           })
         }, 1000)
       }
     },
     async costPlannedAmountChange(key,value) {
-      if(key === 'name'){
-        this.testSongName = value;
+      if(key === 'newMusicFlag'){
+        setTimeout(this.$refs.music.play,2000);
       } else {
         let params = {
           key: key,
@@ -210,6 +212,15 @@ export default defineComponent({
           }
         })
       }
+    },
+    async getNextMusicByOrder(value){
+      await this.$refs.card.getNextMusicByOrder(value);
+    },
+    async getNextMusic(){
+      await this.$refs.card.getNextMusicByOrder(0);
+    },
+    async getPrevMusic(){
+      await this.$refs.card.getPrevMusic();
     }
   }
 })
@@ -235,11 +246,17 @@ export default defineComponent({
           <el-button v-show="!hasRoom && enterRoom" @click="existRoom">退出房间</el-button>
         </div>
         <div v-show="hasRoom||enterRoom">
+          <div>
+            <img :src="songPic" style="width: 20%;height: 20%"/>
+          </div>
           <el-text>{{testSongName}}</el-text>
           <MusicPlayer :song="song"
                        :music-now-time="musicNowTime"
                        :music-state="musicState"
                        @change="costPlannedAmountChange"
+                       @nextMusic="getNextMusicByOrder"
+                       @next="getNextMusic"
+                       @prev="getPrevMusic"
                        ref="music"/>
         </div>
         <el-dialog v-model="enterRoomShow" title="加入房间">
@@ -258,7 +275,7 @@ export default defineComponent({
           </template>
         </el-dialog>
         <div v-show="hasRoom||enterRoom">
-          <MusicListCard @change="costPlannedAmountChange"/>
+          <MusicListCard @change="costPlannedAmountChange" ref="card" style="margin-top: 5%"/>
         </div>
       </el-main>
     </el-container>

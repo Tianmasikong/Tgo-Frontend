@@ -22,7 +22,8 @@ export default defineComponent({
       musicList:[],
       musics:[],
       drawer: false,
-      musicListName:''
+      musicListName:'',
+      nowIndex:0
     }
   },
   methods:{
@@ -89,6 +90,10 @@ export default defineComponent({
             await this.$emit('change', "musicNowTime", 0);
             await this.$emit('change', "musicState", 'pause');
             await this.$emit('change', "musicName", val.name);
+            await this.$emit('change', "musicPic", val.pic);
+            await this.$emit('change',"newMusicFlag",true);
+            this.nowIndex = val.index;
+
           })
         } else {
           this.$message({
@@ -98,6 +103,34 @@ export default defineComponent({
         }
       })
     },
+    async getNextMusicByOrder(flag) {
+      if(flag === 0) {//顺序播放
+        this.nowIndex = this.nowIndex + 1;
+        if (this.nowIndex >= this.musics.length) {
+          this.nowIndex = 0;
+        }
+        let val = this.musics[this.nowIndex];
+        await this.setMusic(val);
+      }else if(flag === 1) {//单曲循环
+        //do nothing
+      }else if(flag === 2) {//列表随机
+        let random1 = Math.floor(Math.random()*(this.musics.length));
+        while(random1 === this.nowIndex){
+          random1 = Math.floor(Math.random()*(this.musics.length));
+        }
+        this.nowIndex = random1;
+        let val = this.musics[this.nowIndex];
+        await this.setMusic(val);
+      }
+    },
+    async getPrevMusic() {
+      this.nowIndex = this.nowIndex - 1;
+      if (this.nowIndex < 0) {
+        this.nowIndex = this.musics.length - 1;
+      }
+      let val = this.musics[this.nowIndex];
+      await this.setMusic(val);
+    }
   }
 })
 </script>
