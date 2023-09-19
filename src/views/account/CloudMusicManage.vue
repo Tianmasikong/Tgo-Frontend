@@ -123,6 +123,7 @@ export default defineComponent({
                     type: 'success',
                     message: '授权登录成功',
                   })
+                  console.log(statusRes);
                   localStorage.setItem('cookie', statusRes.cookie)
                   localStorage.setItem('profile', JSON.stringify(statusRes.profile))
                   router.go(0)
@@ -269,6 +270,7 @@ export default defineComponent({
           this.loginState = "已登录";
           this.loginStateType = "success";
           this.islogin = true;
+          localStorage.setItem('profile',JSON.stringify(profile));
           this.user.profile = profile;
       }
 
