@@ -62,7 +62,7 @@ export default defineComponent({
       percent: 0,
       second: 0,
       duration:"00:00:00",
-      playingOrder:2,
+      playingOrder:0,
       musicNoise:50
     }
   },
