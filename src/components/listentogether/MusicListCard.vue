@@ -29,6 +29,9 @@ export default defineComponent({
   methods:{
     getMusicLists(){
       let profile = JSON.parse(localStorage.getItem("profile"));
+      if(profile === null || profile === undefined) {
+        return;
+      }
       let config = {
         params:{
           timestamp: Date.parse(new Date()) / 1000,

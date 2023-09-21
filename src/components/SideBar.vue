@@ -25,9 +25,9 @@
           <el-icon><headset/></el-icon>
           <span>一起听</span>
         </el-menu-item>
-        <el-menu-item index="3" disabled>
+        <el-menu-item index="3" route="/borrowlisten">
           <el-icon><document /></el-icon>
-          <span>测试</span>
+          <span>借听</span>
         </el-menu-item>
         <el-menu-item index="4" disabled>
           <el-icon><setting /></el-icon>
