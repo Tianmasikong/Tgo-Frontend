@@ -23,7 +23,7 @@
         </el-sub-menu>
         <el-menu-item index="2" route="/listentgo">
           <el-icon><headset/></el-icon>
-          <span>一起听</span>
+          <span>听歌</span>
         </el-menu-item>
       </el-menu>
     </el-col>
