@@ -25,33 +25,25 @@
           <el-icon><headset/></el-icon>
           <span>一起听</span>
         </el-menu-item>
-        <el-menu-item index="3" route="/borrowlisten">
-          <el-icon><document /></el-icon>
-          <span>借听</span>
-        </el-menu-item>
-        <el-menu-item index="4" disabled>
-          <el-icon><setting /></el-icon>
-          <span>测试</span>
-        </el-menu-item>
       </el-menu>
     </el-col>
   </el-row>
 </template>
 <script>
 import {defineComponent} from 'vue'
-import {Document, Setting,MostlyCloudy, UserFilled, Headset} from "@element-plus/icons-vue";
+import {MostlyCloudy, UserFilled, Headset} from "@element-plus/icons-vue";
 
 export default defineComponent({
   name: "SideBar",
-  components: {Headset, UserFilled, MostlyCloudy,Setting, Document},
+  components: {Headset, UserFilled, MostlyCloudy},
 
 })
 </script>
 
 <style scoped>
 .sideBar {
-  height: 100%;
-  width: 100%
+  height: 90%;
+  width: 90%
 }
 .sideBarInner {
   height: 100%;

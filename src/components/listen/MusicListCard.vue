@@ -90,11 +90,9 @@ export default defineComponent({
             let url = tmp[0].url;
             await this.$emit('change', "musicUrl", url);
             await this.$emit('change', "musicId", val.id);
-            await this.$emit('change', "musicNowTime", 0);
-            await this.$emit('change', "musicState", 'pause');
+            await this.$emit('change', "musicState", 'playing');
             await this.$emit('change', "musicName", val.name);
             await this.$emit('change', "musicPic", val.pic);
-            await this.$emit('change',"newMusicFlag",true);
             this.nowIndex = val.index;
 
           })

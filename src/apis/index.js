@@ -13,11 +13,6 @@ const ACCOUNT_CLOUD_MUSIC_LOGOUT = '/cloudMusic/logout'
 const ACCOUNT_CLOUD_MUSIC_PASSWORD_LOGIN = '/cloudMusic/login/cellphone'
 const ACCOUNT_CLOUD_MUSIC_LOGIN_SEND_CAPTCHA = '/cloudMusic/captcha/sent'
 
-//一起听
-const TGO_CREAT_ROOM = '/api/tgo/createroom'
-const TGO_GET_ROOM = '/api/tgo/getroom'
-const TGO_DEL_ROOM = '/api/tgo/delroom'
-const TGO_UPDATE_ROOM = '/api/tgo/updateroom'
 
 //公共组件
 const MUSIC_LIST_CARD_GET_MUSIC_LIST = '/cloudMusic/user/playlist'
@@ -34,10 +29,6 @@ module.exports = {
     ACCOUNT_CLOUD_MUSIC_LOGOUT,
     ACCOUNT_CLOUD_MUSIC_PASSWORD_LOGIN,
     ACCOUNT_CLOUD_MUSIC_LOGIN_SEND_CAPTCHA,
-    TGO_CREAT_ROOM,
-    TGO_GET_ROOM,
-    TGO_DEL_ROOM,
-    TGO_UPDATE_ROOM,
     MUSIC_LIST_CARD_GET_MUSIC_LIST,
     MUSIC_LIST_CARD_GET_MUSICS_BY_LIST_ID,
     MUSIC_LIST_CARD_FIND_MUSIC_IF_ACCESSIBLE,

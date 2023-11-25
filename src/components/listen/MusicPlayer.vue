@@ -11,18 +11,6 @@ export default defineComponent({
         default() {
           return "";
         }
-      },
-      musicNowTime: {
-        type: Number,
-        default() {
-          return 0;
-        }
-      },
-      musicState: {
-        type: String,
-        default() {
-          return "";
-        }
       }
   },
   watch: {
@@ -35,24 +23,10 @@ export default defineComponent({
     currentTime(val) {
       this.handle(val);
     },
-    musicNowTime(val){
-      this.remoteHandle(val);
-    },
-    musicState(val){
-      this.playing = val == "playing";
-      if(this.playing){
-        this.play();
-      }else{
-        this.pause();
-      }
-    },
     musicNoise(val){
       const audioElem = this.$el.querySelector('audio');
       audioElem.volunm = val/100;
     }
-  },
-  created() {
-    this.touch = {};
   },
   data() {
     return {
@@ -69,20 +43,18 @@ export default defineComponent({
   methods:{
     play() {
       const audioElem = this.$el.querySelector('audio');
-      audioElem.play();
       this.playing = true;
       this.second = audioElem.duration;
       let s = parseInt(audioElem.duration % 60);
       let m = parseInt(audioElem.duration / 60) % 60;
       let h = parseInt(audioElem.duration / 60 / 60);
       this.duration = h + ":" + m + ":" + s;
-      this.$emit('change',"musicState","playing");
+      audioElem.play();
     },
     pause() {
       const audioElem = this.$el.querySelector('audio');
-      audioElem.pause();
       this.playing = false;
-      this.$emit('change',"musicState","pause");
+      audioElem.pause();
     },
     onTimeupdate(e) {
       this.currentTime = parseInt(e.target.currentTime);
@@ -103,7 +75,6 @@ export default defineComponent({
       this.$refs.progressBtn.style.left = offsetWidth;
       this.percent = offsetWidth / rect.width;
       this.$refs.maudio.currentTime = this.second * this.percent;
-      this.$emit('change',"musicNowTime",parseInt(this.second * this.percent));
     },
     //处理
     handle(val) {
@@ -114,22 +85,12 @@ export default defineComponent({
       this.currentDuration = h + ":" + m + ":" + s;
       this.percent = val / this.second;
     },
-    remoteHandle(val) {
-      const audioElem = this.$el.querySelector('audio');
-      this.second = audioElem.duration;
-      let s = val % 60
-      let m = parseInt(val / 60) % 60;
-      let h = parseInt(val / 60 / 60);
-      this.currentDuration = h + ":" + m + ":" + s;
-      this.percent = val / this.second;
-      this.$refs.maudio.currentTime = this.second * this.percent;
-    },
     async prev() {
       await this.$emit('prev');
       setTimeout(this.setPlay, 1500);
     },
     async next() {
-      await this.$emit('next');
+      await this.$emit('next',this.playingOrder);
       setTimeout(this.setPlay, 1500);
     },
     changePlayingOrder() {
