@@ -2,7 +2,7 @@
   <div class="index">
     <el-container class="index">
       <el-aside width="20%">
-        <SideBar></SideBar>
+
       </el-aside>
       <el-main>Main</el-main>
     </el-container>
@@ -10,11 +10,11 @@
 </template>
 <script>
 import {defineComponent} from 'vue'
-import SideBar from "@/components/SideBar.vue";
+//import SideBar from "@/components/SideBar.vue";
 
 export default defineComponent({
   name: "MainView",
-  components: {SideBar}
+  components: {}
 
 })
 </script>

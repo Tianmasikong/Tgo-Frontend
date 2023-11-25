@@ -5,22 +5,17 @@
         <el-link href="/">Tgo Demo</el-link>
       </h5>
       <el-menu
-          default-active="1"
+          ref="musicManageMenu"
           class="sideBarInner"
+          :default-active="activeIndex"
           @open="handleOpen"
           @close="handleClose"
           router
       >
-        <el-sub-menu index="1">
-          <template #title>
-            <el-icon><userFilled /></el-icon>
-            <span>我的账号</span>
-          </template>
-          <el-menu-item index="1-1" route="/cloudmusicmanage">
-            <el-icon><MostlyCloudy /></el-icon>
-            网易云账号
-          </el-menu-item>
-        </el-sub-menu>
+        <el-menu-item index="1" route="/cloudmusicmanage">
+          <el-icon><MostlyCloudy/></el-icon>
+          <span>网易云账号</span>
+        </el-menu-item>
         <el-menu-item index="2" route="/listentgo">
           <el-icon><headset/></el-icon>
           <span>听歌</span>
@@ -31,12 +26,29 @@
 </template>
 <script>
 import {defineComponent} from 'vue'
-import {MostlyCloudy, UserFilled, Headset} from "@element-plus/icons-vue";
+import { Headset,MostlyCloudy} from "@element-plus/icons-vue";
 
 export default defineComponent({
   name: "SideBar",
-  components: {Headset, UserFilled, MostlyCloudy},
+  components: {Headset, MostlyCloudy },
+  data() {
+    return {
+      activeIndex: '',
+    };
+  },
 
+
+  // 在这里指定组件对应的标签的 index 值
+  // 当路由匹配到该组件时，对应的标签就会高亮显示
+  // 在这个例子中，当路由为 `/listentgo` 时，第二个标签会被高亮显示
+  mounted() {
+      if (this.$route.path === '/cloudmusicmanage') {
+        this.activeIndex = '1'
+      }
+      if (this.$route.path === '/listentgo') {
+        this.activeIndex = '2'
+      }
+  },
 })
 </script>
 

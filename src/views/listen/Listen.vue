@@ -58,11 +58,11 @@ export default defineComponent({
       </el-aside>
       <el-main>
         <div>
-          <el-text size="large">ListenTogether</el-text>
+          <el-text size="large">Listen</el-text>
         </div>
         <div>
           <div>
-            <img :src="musicPic" style="width: 20%;height: 20%"/>
+            <img v-if="musicPic" :src="musicPic" style="width: 20%;height: 20%" alt=""/>
           </div>
           <el-text>{{musicName}}</el-text>
           <MusicPlayer :song="musicUrl"
