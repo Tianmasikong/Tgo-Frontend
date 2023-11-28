@@ -2,9 +2,11 @@
   <el-row class="sideBar">
     <el-col :span="12" style="flex: 0 0 100%;width:100%;max-width:100%">
       <h5 class="mb-2">
-        <el-link href="/">Tgo Demo</el-link>
+        <el-link href="/" style="font-size: larger">Tgo Demo</el-link>
       </h5>
       <el-menu
+
+          active-text-color="#6699CC"
           ref="musicManageMenu"
           class="sideBarInner"
           :default-active="activeIndex"
@@ -54,11 +56,15 @@ export default defineComponent({
 
 <style scoped>
 .sideBar {
-  height: 90%;
-  width: 90%
+  height: 100%;
+  width: 94%;
+  padding-bottom: 40%;
+  box-shadow: 0px 0px 20px 4px rgb(182, 215, 215);
+  background-color: #f9fdfd;
 }
 .sideBarInner {
   height: 100%;
-  width: 100%
+  width: 100%;
+  background-color: #f9fdfd;
 }
 </style>

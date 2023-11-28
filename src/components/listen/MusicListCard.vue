@@ -14,74 +14,74 @@ export default defineComponent({
   created() {
     this.getMusicLists();
   },
-  data(){
+  data() {
     return {
       number: 5,
-      currentPage:1,
+      currentPage: 1,
       size: 50,
-      musicList:[],
-      musics:[],
+      musicList: [],
+      musics: [],
       drawer: false,
-      musicListName:'',
-      nowIndex:0
+      musicListName: '',
+      nowIndex: 0
     }
   },
-  methods:{
-    getMusicLists(){
+  methods: {
+    getMusicLists() {
       let profile = JSON.parse(localStorage.getItem("profile"));
-      if(profile === null || profile === undefined) {
+      if (profile === null || profile === undefined) {
         return;
       }
       let config = {
-        params:{
+        params: {
           timestamp: Date.parse(new Date()) / 1000,
           uid: profile.userId
         }
       }
-      musicListCardGetMusicList(config).then(res=>{
+      musicListCardGetMusicList(config).then(res => {
         this.musicList = res.data.playlist;
         this.size = res.data.playlist.length;
       })
     },
-    getMusicName(off){
-      let tmp = JSON.stringify(this.musicList[(this.currentPage - 1)*this.number + off])
-      if(tmp === undefined)return "";
+    getMusicName(off) {
+      let tmp = JSON.stringify(this.musicList[(this.currentPage - 1) * this.number + off])
+      if (tmp === undefined) return "";
       let sec = JSON.parse(tmp);
       return sec.name;
     },
-    getMusicPic(off){
-      let tmp = JSON.stringify(this.musicList[(this.currentPage - 1)*this.number + off])
-      if(tmp === undefined)return "";
+    getMusicPic(off) {
+      let tmp = JSON.stringify(this.musicList[(this.currentPage - 1) * this.number + off])
+      if (tmp === undefined) return "";
       let sec = JSON.parse(tmp);
       return sec.coverImgUrl;
     },
-    getMusicsByListId(off){
-      let tmp = JSON.stringify(this.musicList[(this.currentPage - 1)*this.number + off])
-      if(tmp === undefined)return "";
+    getMusicsByListId(off) {
+      let tmp = JSON.stringify(this.musicList[(this.currentPage - 1) * this.number + off])
+      if (tmp === undefined) return "";
       let sec = JSON.parse(tmp).id;
       let config = {
-        params:{
-          id : sec,
+        params: {
+          id: sec,
           timeStamp: Date.parse(new Date()) / 1000
         }
       };
-      musicListCardGetMusicsByListId(config).then(res =>{
+      musicListCardGetMusicsByListId(config).then(res => {
         this.musics = res.data.result;
         this.musicListName = this.getMusicName(off);
         this.drawer = true;
       });
     },
-    setMusic(val){
+    setMusic(val) {
       let config = {
-        params:{
-          id : val.id,
+        params: {
+          id: val.id,
           timeStamp: Date.parse(new Date()) / 1000
         }
       };
-      musicListCardFindMusicIfAccessible(config).then(res =>{
-        if(res.data.success) {
+      musicListCardFindMusicIfAccessible(config).then(res => {
+        if (res.data.success) {
           config.params = {
-            id : val.id,
+            id: val.id,
             timeStamp: Date.parse(new Date()) / 1000,
             level: 'exhigh'
           };
@@ -105,19 +105,19 @@ export default defineComponent({
       })
     },
     async getNextMusicByOrder(flag) {
-      if(flag === 0) {//顺序播放
+      if (flag === 0) {//顺序播放
         this.nowIndex = this.nowIndex + 1;
         if (this.nowIndex >= this.musics.length) {
           this.nowIndex = 0;
         }
         let val = this.musics[this.nowIndex];
         await this.setMusic(val);
-      }else if(flag === 1) {//单曲循环
+      } else if (flag === 1) {//单曲循环
         //do nothing
-      }else if(flag === 2) {//列表随机
-        let random1 = Math.floor(Math.random()*(this.musics.length));
-        while(random1 === this.nowIndex){
-          random1 = Math.floor(Math.random()*(this.musics.length));
+      } else if (flag === 2) {//列表随机
+        let random1 = Math.floor(Math.random() * (this.musics.length));
+        while (random1 === this.nowIndex) {
+          random1 = Math.floor(Math.random() * (this.musics.length));
         }
         this.nowIndex = random1;
         let val = this.musics[this.nowIndex];
@@ -145,17 +145,19 @@ export default defineComponent({
           :span="4"
           :offset="index > 0 ? 1 : 0"
       >
-        <el-card :body-style="{ padding: '0px' }" shadow="hover" @click="getMusicsByListId(index)">
+        <el-card :body-style="{ padding: '0px' }" shadow="always" @click="getMusicsByListId(index)" class="card" v-if="getMusicPic(index)">
           <div class="img_cover">
             <img
                 :src="getMusicPic(index)"
                 class="image"/>
             <div class="cover">
-              <el-icon class="cover_img" size="100px"><videoPlay/></el-icon>
+              <el-icon class="cover_img" size="100px">
+                <videoPlay/>
+              </el-icon>
             </div>
           </div>
-          <div style="height:40px;font-size: small">
-            <span id="musicListName">{{getMusicName(index)}}</span>
+          <div style="height:40px;font-size: small;font-weight: bolder">
+            <span id="musicListName">{{ getMusicName(index) }}</span>
           </div>
         </el-card>
       </el-col>
@@ -176,35 +178,46 @@ export default defineComponent({
           :data="musics"
           height="100%"
           highlight-current-row
-          @row-dblclick = setMusic
+          @row-dblclick=setMusic
           style="width: 100%">
         <el-table-column prop="name" label="歌曲名" width="180"/>
-        <el-table-column prop="ar" label="歌手名" width="100" />
-        <el-table-column prop="al" label="专辑" />
+        <el-table-column prop="ar" label="歌手名" width="100"/>
+        <el-table-column prop="al" label="专辑"/>
       </el-table>
     </el-drawer>
   </div>
 </template>
 
 <style scoped>
+.card {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19);
+}
+.card:hover {
+  transition: all 1s;
+  transform: scale(1.1);
+}
 .cardIndex {
   width: 80%;
   margin: 0 auto;
   text-align: center;
 }
+
 .image {
   width: 100%;
   text-align: center;
   margin: 0 auto;
 }
+
 .musicCardSelector {
-  margin: 0 auto;
+  margin: 5% auto 0;
   text-align: center;
 }
-.img_cover:hover{
-  transition: all 1s;
-  transform: scale(1.05);
-}
+
+/*.img_cover:hover {*/
+/*  transition: all 1s;*/
+/*  transform: scale(1.05);*/
+/*}*/
+
 .cover {
   margin: 0 auto;
   top: 0px;
@@ -218,19 +231,23 @@ export default defineComponent({
 }
 
 /* 鼠标hover,显示遮罩,设置过渡时间 */
-.cover:hover  {
+.cover:hover {
+  cursor: pointer;
   transition: all 1s;
-  opacity: 0.5;
+  opacity: 0.9;
+  color: #99CCFF;
 }
-.img_cover{
+
+.img_cover {
   position: relative;
-  margin : 0 auto;
+  margin: 0 auto;
 }
-.cover_img{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
+
+.cover_img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 2;
 }
 </style>
