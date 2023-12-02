@@ -185,11 +185,10 @@ export default defineComponent({
       <el-drawer
           :title="musicListName"
           :append-to-body="false"
-          :modal="false"
           style="position:absolute;"
           v-model="drawer"
           :direction="'ltr'"
-          :size="500"
+          size="20%"
       >
         <el-table
             :data="musics"
