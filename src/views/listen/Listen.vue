@@ -59,7 +59,7 @@ export default defineComponent({
       </el-aside>
       <el-main class="main">
         <div>
-          <el-text size="large">Listen</el-text>
+          <img src="../../../public/Listen-logos_black.png" alt="" style="width: 200px">
         </div>
         <br>
         <div>

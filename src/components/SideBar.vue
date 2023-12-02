@@ -2,7 +2,7 @@
   <el-row class="sideBar">
     <el-col :span="12" style="flex: 0 0 100%;width:100%;max-width:100%">
       <h5 class="mb-2">
-        <el-link href="/" style="font-size: larger">Tgo Demo</el-link>
+        <img src="../../public/img_1.png" style="width: 140px">
       </h5>
       <el-menu
 
