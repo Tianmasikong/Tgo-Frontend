@@ -22,15 +22,6 @@ const _get = (url, config) => {
         instanceNormal()
         .get(url, config)
         .then(res => {
-            if(!url.startsWith("/api/user") && !url.startsWith("/cloudMusic")){
-                const token = res.headers.token;
-                if (token) {
-                    sessionStorage.setItem('userToken', token);
-                } else {
-                    sessionStorage.removeItem('userToken');
-                    Router.push('/login');
-                }
-            }
             resolve(res);
         })
         .catch(err => {
@@ -43,16 +34,6 @@ const _post = (url, config) => {
         instanceNormal()
         .post(url, config)
         .then(res => {
-            // console.log(url)
-            if(!url.startsWith("/api/user") && !url.startsWith("/cloudMusic")){
-                const token = res.headers.token;
-                if (token) {
-                    sessionStorage.setItem('userToken',token);
-                } else {
-                    sessionStorage.removeItem('userToken');
-                    Router.push('/login');
-                }
-            }
             resolve(res);
         })
         .catch(err => {
@@ -65,15 +46,6 @@ const _delete = (url, config) => {
         instanceNormal()
         .delete(url, config)
         .then(res => {
-            if(!url.startsWith("/api/user")){
-                const token = res.headers.token;
-                if (token) {
-                    sessionStorage.setItem('userToken',token);
-                } else {
-                    sessionStorage.removeItem('userToken');
-                    Router.push('/login');
-                }
-            }
             resolve(res);
         })
         .catch(err => {
@@ -86,15 +58,6 @@ const _put = (url, config) => {
         instanceNormal()
         .put(url, config)
         .then(res => {
-            if(!url.startsWith("/api/user")){
-                const token = res.headers.token;
-                if (token) {
-                    sessionStorage.setItem('userToken',token);
-                } else {
-                    sessionStorage.removeItem('userToken');
-                    Router.push('/login');
-                }
-            }
             resolve(res);
         })
         .catch(err => {
