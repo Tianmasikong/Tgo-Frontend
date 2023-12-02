@@ -1,5 +1,4 @@
 import Axios from "axios";
-import Router from "../router";
 
 const instanceNormal = () => {
     let token = sessionStorage.getItem("userToken");
