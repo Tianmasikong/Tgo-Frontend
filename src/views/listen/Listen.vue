@@ -62,9 +62,9 @@ export default defineComponent({
           <img src="../../../public/Listen-logos_black.png" alt="" style="width: 200px">
         </div>
         <br>
-        <div>
+        <div style="height: 50%">
           <div>
-            <img v-if="musicPic" :src="musicPic" style="width: 20%;height: 20%" alt=""/>
+            <img v-if="musicPic" :src="musicPic" style="width: 20%;height: 40%"/>
           </div>
           <el-text>{{ musicName }}</el-text>
           <MusicPlayer :song="musicUrl"
@@ -72,10 +72,11 @@ export default defineComponent({
                        @nextMusic="getNextMusicByOrder"
                        @next="getNextMusicByOrder"
                        @prev="getPrevMusic"
-                       ref="music"/>
+                       ref="music"
+          style="margin-top: 8%"/>
         </div>
-        <div>
-          <MusicListCard @change="costPlannedAmountChange" ref="card" style="margin-top: 5%"/>
+        <div  style="padding-top: 7%">
+          <MusicListCard @change="costPlannedAmountChange" ref="card"/>
         </div>
       </el-main>
     </el-container>

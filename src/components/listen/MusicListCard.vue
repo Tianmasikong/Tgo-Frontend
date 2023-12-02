@@ -145,7 +145,8 @@ export default defineComponent({
           :span="4"
           :offset="index > 0 ? 1 : 0"
       >
-        <el-card :body-style="{ padding: '0px' }" shadow="always" @click="getMusicsByListId(index)" class="card" v-if="getMusicPic(index)">
+        <el-card :body-style="{ padding: '0px' }" shadow="always" @click="getMusicsByListId(index)" class="card"
+                 v-if="getMusicPic(index)">
           <div class="img_cover">
             <img
                 :src="getMusicPic(index)"
@@ -168,12 +169,7 @@ export default defineComponent({
           v-model:current-page="currentPage"
           :total="size"/>
     </el-row>
-    <el-drawer
-        :title="musicListName"
-        v-model="drawer"
-        :direction="rtl"
-        :size="600"
-    >
+    <el-popover v-model="drawer">
       <el-table
           :data="musics"
           height="100%"
@@ -184,20 +180,52 @@ export default defineComponent({
         <el-table-column prop="ar" label="歌手名" width="100"/>
         <el-table-column prop="al" label="专辑"/>
       </el-table>
-    </el-drawer>
+    </el-popover>
+    <div class="draw-parent">
+      <el-drawer
+          :title="musicListName"
+          :append-to-body="false"
+          :modal="false"
+          style="position:absolute;"
+          v-model="drawer"
+          :direction="'ltr'"
+          :size="500"
+      >
+        <el-table
+            :data="musics"
+            height="100%"
+            highlight-current-row
+            @row-dblclick=setMusic
+            style="width: 100%">
+          <el-table-column prop="name" label="歌曲名" width="180"/>
+          <el-table-column prop="ar" label="歌手名" width="100"/>
+          <el-table-column prop="al" label="专辑"/>
+        </el-table>
+      </el-drawer>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.draw-parent {
+  position: relative;
+  overflow: hidden;
+  width: 20%;
+  height: 50%;
+  margin: auto;
+}
+
 .card {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19);
 }
+
 .card:hover {
   transition: all 1s;
   transform: scale(1.1);
 }
+
 .cardIndex {
-  width: 80%;
+  width: 50%;
   margin: 0 auto;
   text-align: center;
 }
