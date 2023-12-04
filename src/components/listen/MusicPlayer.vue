@@ -94,7 +94,7 @@ export default defineComponent({
   },
   methods: {
     playLyric(){
-      this.currentLyric.seek(this.currentTime * 1000+100);
+      this.currentLyric.seek(this.currentTime * 1000+1000);
     },
     handleLyric({lineNum}) {
       lyricEl = this.$refs.lyricContainer;
@@ -175,7 +175,7 @@ export default defineComponent({
           behavior: 'smooth'
         });
       }
-      this.currentLyric.seek(this.currentTime * 1000+100);
+      this.currentLyric.seek(this.currentTime * 1000+1000);
       if(this.musicState !== 'playing'){
         this.currentLyric.stop();
       }
