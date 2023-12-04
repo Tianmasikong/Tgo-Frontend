@@ -175,7 +175,7 @@ export default defineComponent({
           behavior: 'smooth'
         });
       }
-      this.currentLyric.seek(this.currentTime * 1000);
+      this.currentLyric.seek(this.currentTime * 1000+100);
       if(this.musicState !== 'playing'){
         this.currentLyric.stop();
       }
