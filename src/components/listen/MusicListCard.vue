@@ -67,6 +67,12 @@ export default defineComponent({
       };
       musicListCardGetMusicsByListId(config).then(res => {
         this.musics = res.data.result;
+        for (let i=0;i<this.musics.length;i++) {
+          if (typeof this.musics[i] !== 'string') {
+            break;
+          }
+          this.musics[i] = JSON.parse(this.musics[i]);
+        }
         this.musicListName = this.getMusicName(off);
         this.drawer = true;
       });
