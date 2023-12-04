@@ -127,6 +127,7 @@ export default defineComponent({
       let h = parseInt(audioElem.duration / 60 / 60);
       this.duration = h + ":" + m + ":" + s;
       audioElem.play();
+      this.currentLyric.seek(this.currentTime * 1000);
     },
     pause() {
       const audioElem = this.$el.querySelector('audio');
