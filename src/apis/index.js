@@ -19,6 +19,7 @@ const MUSIC_LIST_CARD_GET_MUSIC_LIST = '/cloudMusic/user/playlist'
 const MUSIC_LIST_CARD_GET_MUSICS_BY_LIST_ID = '/api/myCloudMusic/getMusicsByListsId'
 const MUSIC_LIST_CARD_FIND_MUSIC_IF_ACCESSIBLE = '/cloudMusic/check/music'
 const MUSIC_LIST_CARD_GET_MUSIC_URL = '/cloudMusic/song/url/v1'
+const MUSIC_LIST_CARD_GET_MUSIC_LYRIC_BY_ID = '/cloudMusic/lyric'
 module.exports = {
     HOME,
     USER_LOGIN,
@@ -32,5 +33,6 @@ module.exports = {
     MUSIC_LIST_CARD_GET_MUSIC_LIST,
     MUSIC_LIST_CARD_GET_MUSICS_BY_LIST_ID,
     MUSIC_LIST_CARD_FIND_MUSIC_IF_ACCESSIBLE,
-    MUSIC_LIST_CARD_GET_MUSIC_URL
+    MUSIC_LIST_CARD_GET_MUSIC_URL,
+    MUSIC_LIST_CARD_GET_MUSIC_LYRIC_BY_ID
 }

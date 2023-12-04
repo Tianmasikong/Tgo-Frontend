@@ -1,12 +1,32 @@
 <script>
 import {defineComponent} from "vue";
+import Lyric from 'lyric-parser'
 import {CaretLeft, CaretRight, VideoPause, VideoPlay} from "@element-plus/icons-vue";
-
+let lyricEl = null;
+let lyricListEl = null
 export default defineComponent({
   name: "MusicPlayer",
   components: {CaretRight, CaretLeft, VideoPause, VideoPlay},
   props: {
     song: {
+      type: String,
+      default() {
+        return "";
+      }
+    },
+    lyric: {
+      type: String,
+      default() {
+        return "";
+      }
+    },
+    musicPic: {
+      type: String,
+      default() {
+        return "";
+      }
+    },
+    musicName: {
       type: String,
       default() {
         return "";
@@ -26,6 +46,13 @@ export default defineComponent({
     musicNoise(val) {
       const audioElem = this.$el.querySelector('audio');
       audioElem.volunm = val / 100;
+    },
+    lyric(val){
+      console.log(val);
+      if(this.currentLyric !== ''){
+        this.currentLyric.stop();
+      }
+      this.currentLyric = new Lyric(this.lyric,this.handleLyric);
     }
   },
   data() {
@@ -39,7 +66,10 @@ export default defineComponent({
       playingOrder: 0,
       showTooltip: false,
       showMuteTip: false,
-      musicNoise: 50
+      musicNoise: 50,
+      currentLyric: '',
+      // 当前播放行数  用来设置class
+      currentLineNum: 0
     }
   },
   computed: {
@@ -63,6 +93,34 @@ export default defineComponent({
     }
   },
   methods: {
+    playLyric(){
+      this.currentLyric.seek(this.currentTime * 1000);
+    },
+    handleLyric({lineNum}) {
+      lyricEl = this.$refs.lyricContainer;
+      lyricListEl = this.$refs.lyricListRef;
+      this.currentLineNum = lineNum;
+      if (!lyricListEl) {
+        return
+      }
+      if (lineNum > 3) {
+        const lineEl = lyricListEl.children[0]
+        // 拿到行的高度
+        const lineHeight= lineEl.clientHeight
+        // 滚动到哪里呢  到一行高度*当前的行-3行
+        lyricEl.scrollTo({
+          top: lineHeight*(lineNum-3),
+          left: 0,
+          behavior: 'smooth'
+        });
+      }else {
+        lyricEl.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth'
+        });
+      }
+    },
     play() {
       const audioElem = this.$el.querySelector('audio');
       this.playing = true;
@@ -72,11 +130,13 @@ export default defineComponent({
       let h = parseInt(audioElem.duration / 60 / 60);
       this.duration = h + ":" + m + ":" + s;
       audioElem.play();
+      this.playLyric();
     },
     pause() {
       const audioElem = this.$el.querySelector('audio');
       this.playing = false;
       audioElem.pause();
+      this.currentLyric.stop();
     },
     onTimeupdate(e) {
       this.currentTime = parseInt(e.target.currentTime);
@@ -97,6 +157,7 @@ export default defineComponent({
       this.$refs.progressBtn.style.left = offsetWidth;
       this.percent = offsetWidth / rect.width;
       this.$refs.maudio.currentTime = this.second * this.percent;
+      this.currentLyric.stop();
     },
     //处理
     handle(val) {
@@ -106,6 +167,18 @@ export default defineComponent({
       let h = parseInt(val / 60 / 60);
       this.currentDuration = h + ":" + m + ":" + s;
       this.percent = val / this.second;
+      if(this.currentTime === 0) {
+        lyricEl = this.$refs.lyricContainer;
+        lyricEl.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth'
+        });
+      }
+      this.currentLyric.seek(this.currentTime * 1000);
+      if(this.musicState !== 'playing'){
+        this.currentLyric.stop();
+      }
     },
     async prev() {
       await this.$emit('prev');
@@ -133,12 +206,27 @@ export default defineComponent({
 <template>
   <div>
 
-    <audio :src="song"
-           style="display:none;"
-           @timeupdate="onTimeupdate"
-           @ended="audioEnd"
-           ref="maudio"
-           id="maudio"/>
+    <div>
+      <audio :src="song"
+             style="display:none;"
+             @timeupdate="onTimeupdate"
+             @ended="audioEnd"
+             ref="maudio"
+             id="maudio"/>
+    </div>
+    <el-text size="large">{{ musicName }}</el-text>
+    <div class="picAndLyric">
+      <div style="float: left;display: flex; flex-direction: column; align-items: center; height: 100%">
+        <img v-if="musicPic" :src="musicPic" style="width: 300px;height: 300px"/>
+      </div>
+      <div class="lyric-container" ref="lyricContainer">
+        <div class="content" ref="lyricListRef">
+          <p class="text" :key="index" v-for="(line, index) in currentLyric.lines" :class="{'current': currentLineNum ===index}">
+            {{line.txt}}
+          </p>
+        </div>
+      </div>
+    </div>
     <div class="progress-wrapper">
       <!-- 时间显示 -->
       <span class="time">{{ currentDuration }}|{{ duration }}</span>
@@ -269,6 +357,30 @@ export default defineComponent({
 </template>
 
 <style scoped>
+p {
+  display: block;
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  box-sizing: border-box;
+}
+.current{
+  color: white;
+}
+.lyric-container {
+  width: 300px;
+  height: 100%;
+  background-color: antiquewhite;
+  float: left;
+  overflow: hidden;
+}
+.progress-wrapper {
+  display: flex;
+  width: 80%;
+  padding: 10px 0;
+  align-items: center;
+  margin: 0 auto;
+}
 .tooltip {
   position: absolute;
   background-color: #bbecfa;
@@ -277,7 +389,12 @@ export default defineComponent({
   border-radius: 5px;
   z-index: 999;
 }
-
+.picAndLyric {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
 .progress-wrapper {
   display: flex;
   align-items: center;

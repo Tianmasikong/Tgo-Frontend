@@ -13,7 +13,8 @@ export default defineComponent({
       musicId: '',
       musicPic: 'https://s2.loli.net/2023/11/28/W6bLBdvZn1gjPaY.png',
       musicName: '',
-      musicState: ''
+      musicState: '',
+      lyric: ''
     }
   },
   methods: {
@@ -36,6 +37,9 @@ export default defineComponent({
       if (key === 'musicPic') {
         this.musicPic = value;
         console.log("pic:!!! " + value)
+      }
+      if (key === 'lyric') {
+        this.lyric = value;
       }
     },
     async getNextMusicByOrder(value) {
@@ -63,19 +67,18 @@ export default defineComponent({
         </div>
         <br>
         <div style="height: 50%">
-          <div>
-            <img v-if="musicPic" :src="musicPic" style="width: 20%;height: 40%"/>
-          </div>
-          <el-text>{{ musicName }}</el-text>
           <MusicPlayer :song="musicUrl"
+                       :lyric="lyric"
+                       :music-name="musicName"
+                       :music-pic="musicPic"
                        @change="costPlannedAmountChange"
                        @nextMusic="getNextMusicByOrder"
                        @next="getNextMusicByOrder"
                        @prev="getPrevMusic"
                        ref="music"
-          style="margin-top: 8%"/>
+          style="margin-top: 4%"/>
         </div>
-        <div  style="padding-top: 7%">
+        <div  style="padding-top: 2%">
           <MusicListCard @change="costPlannedAmountChange" ref="card"/>
         </div>
       </el-main>

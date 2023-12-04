@@ -1,7 +1,7 @@
 <script>
 import {defineComponent} from "vue";
 import {
-  musicListCardFindMusicIfAccessible,
+  musicListCardFindMusicIfAccessible, musicListCardGetLyricById,
   musicListCardGetMusicList,
   musicListCardGetMusicsByListId, musicListCardGetMusicUrl
 } from "@/request/component";
@@ -83,7 +83,7 @@ export default defineComponent({
           config.params = {
             id: val.id,
             timeStamp: Date.parse(new Date()) / 1000,
-            level: 'exhigh'
+            level: 'standard'
           };
           musicListCardGetMusicUrl(config).then(async res => {
             let tmp = res.data.data;
@@ -94,7 +94,10 @@ export default defineComponent({
             await this.$emit('change', "musicName", val.name);
             await this.$emit('change', "musicPic", val.pic);
             this.nowIndex = val.index;
-
+          });
+          musicListCardGetLyricById(config).then(async res => {
+            let tmp = res.data.lrc;
+            await this.$emit('change', "lyric", tmp.lyric);
           })
         } else {
           this.$message({
