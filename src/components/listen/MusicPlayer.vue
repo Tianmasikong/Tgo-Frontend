@@ -1,6 +1,6 @@
 <script>
 import {defineComponent} from "vue";
-import Lyric from 'lyric-parser'
+import Lyric from 'lyriccloudmusic'
 import {CaretLeft, CaretRight, VideoPause, VideoPlay} from "@element-plus/icons-vue";
 let lyricEl = null;
 let lyricListEl = null
