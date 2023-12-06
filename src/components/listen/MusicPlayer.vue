@@ -93,9 +93,6 @@ export default defineComponent({
     }
   },
   methods: {
-    playLyric(){
-      this.currentLyric.seek(this.currentTime * 1000);
-    },
     handleLyric({lineNum}) {
       lyricEl = this.$refs.lyricContainer;
       lyricListEl = this.$refs.lyricListRef;
@@ -130,7 +127,7 @@ export default defineComponent({
       let h = parseInt(audioElem.duration / 60 / 60);
       this.duration = h + ":" + m + ":" + s;
       audioElem.play();
-      this.playLyric();
+      this.currentLyric.seek(this.currentTime * 1000);
     },
     pause() {
       const audioElem = this.$el.querySelector('audio');
