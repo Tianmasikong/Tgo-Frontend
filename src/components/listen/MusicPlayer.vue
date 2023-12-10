@@ -375,8 +375,9 @@ p {
   background-color: rgb(182, 215, 215,0.2);
 }
 .musicNameDisplay {
-  font-size: 50px;
+  font-size: 40px;
   margin-bottom: 10px;
+  color: black;
 }
 .progress-wrapper {
   display: flex;

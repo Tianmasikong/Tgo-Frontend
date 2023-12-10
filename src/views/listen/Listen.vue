@@ -69,7 +69,6 @@ export default defineComponent({
         <div>
           <img src="../../../public/Listen-logos_black.png" alt="" style="width: 200px">
         </div>
-        <br>
         <div style="height: 50%">
           <MusicPlayer :song="musicUrl"
                        :lyric="lyric"
