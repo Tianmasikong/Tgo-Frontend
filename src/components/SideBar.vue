@@ -59,7 +59,6 @@ export default defineComponent({
   height: 100%;
   width: 94%;
   padding-bottom: 40%;
-  box-shadow: 0px 0px 20px 4px rgb(182, 215, 215);
   background-color: #f9fdfd;
 }
 .sideBarInner {

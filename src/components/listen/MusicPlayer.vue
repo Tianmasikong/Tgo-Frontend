@@ -377,6 +377,7 @@ p {
 .musicNameDisplay {
   font-size: 40px;
   margin-bottom: 10px;
+  margin-top: 0;
   color: black;
 }
 .progress-wrapper {
