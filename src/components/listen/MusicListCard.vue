@@ -100,6 +100,13 @@ export default defineComponent({
             await this.$emit('change', "musicName", val.name);
             await this.$emit('change', "musicPic", val.pic);
             this.nowIndex = val.index;
+            let ifVIP = tmp[0].fee;
+            if (ifVIP === 1 || ifVIP === 4) {
+              this.$message({
+                type: 'warning',
+                message: '正在试听，开通黑胶会员听整首'
+              });
+            }
           });
           musicListCardGetLyricById(config).then(async res => {
             let tmp = res.data.lrc;

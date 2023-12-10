@@ -46,7 +46,7 @@ export default defineComponent({
       await this.$refs.card.getNextMusicByOrder(value);
     },
     async getNextMusic() {
-      await this.$refs.card.getNextMusicByOrder(0);
+      await this.$refs.card.getNextMufsicByOrder(0);
     },
     async getPrevMusic() {
       await this.$refs.card.getPrevMusic();
