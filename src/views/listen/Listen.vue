@@ -64,7 +64,7 @@ export default defineComponent({
       </el-aside>
       <el-main class="main">
         <div class="background-cover">
-          <img v-show="musicPic!=='https://s2.loli.net/2023/11/28/W6bLBdvZn1gjPaY.png'" v-bind:src="musicPic" style="width:100%;height:100%;object-fit: contain;" alt="">
+          <img v-show="musicPic!=='https://s2.loli.net/2023/11/28/W6bLBdvZn1gjPaY.png'" v-bind:src="musicPic" style="width:100%;height:100%; object-fit: cover; object-position: center center;" alt="">
         </div>
         <div>
           <img src="../../../public/Listen-logos_black.png" alt="" style="width: 200px">

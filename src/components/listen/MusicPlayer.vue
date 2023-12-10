@@ -210,7 +210,7 @@ export default defineComponent({
              ref="maudio"
              id="maudio"/>
     </div>
-    <el-text size="large">{{ musicName }}</el-text>
+    <el-text class="musicNameDisplay">{{ musicName }}</el-text>
     <div class="picAndLyric">
       <div style="float: left;display: flex; flex-direction: column; align-items: center; height: 100%">
         <img v-if="musicPic" :src="musicPic" style="width: 300px;height: 300px"/>
@@ -373,6 +373,10 @@ p {
   border-width: 2px;
   border-color: rgb(182, 215, 215,0.2);
   background-color: rgb(182, 215, 215,0.2);
+}
+.musicNameDisplay {
+  font-size: 100px;
+  margin-bottom: 10px;
 }
 .progress-wrapper {
   display: flex;
