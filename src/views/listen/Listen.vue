@@ -56,12 +56,16 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="index">
+  <div class="index" >
+
     <el-container class="index">
       <el-aside width="20%">
         <SideBar></SideBar>
       </el-aside>
       <el-main class="main">
+        <div class="background-cover">
+          <img v-show="musicPic!=='https://s2.loli.net/2023/11/28/W6bLBdvZn1gjPaY.png'" v-bind:src="musicPic" style="width:100%;height:100%;object-fit: contain;" alt="">
+        </div>
         <div>
           <img src="../../../public/Listen-logos_black.png" alt="" style="width: 200px">
         </div>
@@ -92,9 +96,19 @@ export default defineComponent({
   width: 100%;
   overflow: hidden;
 }
-
+.index .background-cover {
+  filter: blur(70px);
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin: -8px -8px auto;
+}
 .main {
   width: 100%;
+  position: relative;
+  padding: 0;
   /*background-color: #f5f7f7;*/
 }
 </style>

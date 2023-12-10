@@ -220,6 +220,7 @@ export default defineComponent({
           <p class="text" :key="index" v-for="(line, index) in currentLyric.lines" :class="{'current': currentLineNum ===index}">
             {{line.txt}}
           </p>
+          <p v-show="currentLyric === ''" style="text-align: center;">暂无歌曲</p>
         </div>
       </div>
     </div>
@@ -366,9 +367,12 @@ p {
 .lyric-container {
   width: 300px;
   height: 100%;
-  background-color: antiquewhite;
   float: left;
   overflow: hidden;
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(182, 215, 215,0.2);
+  background-color: rgb(182, 215, 215,0.2);
 }
 .progress-wrapper {
   display: flex;

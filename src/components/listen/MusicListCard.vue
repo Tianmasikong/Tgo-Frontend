@@ -204,7 +204,7 @@ export default defineComponent({
           style="position:absolute;"
           v-model="drawer"
           :direction="'ltr'"
-          size="20%"
+          size="30%"
       >
         <el-table
             :data="musics"
