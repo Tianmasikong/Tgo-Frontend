@@ -67,6 +67,14 @@ export default defineComponent({
       };
       musicListCardGetMusicsByListId(config).then(res => {
         this.musics = res.data.result;
+        if (this.musics == null) {
+          this.$message({
+            type: 'error',
+            message: '此歌单为空',
+            duration: 800
+          });
+          return;
+        }
         for (let i=0;i<this.musics.length;i++) {
           if (typeof this.musics[i] !== 'string') {
             break;
@@ -104,7 +112,8 @@ export default defineComponent({
             if (ifVIP === 1 || ifVIP === 4) {
               this.$message({
                 type: 'warning',
-                message: '正在试听，开通黑胶会员听整首'
+                message: '正在试听，开通黑胶会员听整首',
+                duration: 1500
               });
             }
           });
@@ -173,7 +182,7 @@ export default defineComponent({
               </el-icon>
             </div>
           </div>
-          <div style="height:40px;font-size: small;font-weight: bolder">
+          <div style="height:40px;font-size: small;font-weight: bolder;">
             <span id="musicListName">{{ getMusicName(index) }}</span>
           </div>
         </el-card>
@@ -232,6 +241,7 @@ export default defineComponent({
 
 .card {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19);
+  border-width: 0;
 }
 
 .card:hover {

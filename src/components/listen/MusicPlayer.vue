@@ -369,10 +369,8 @@ p {
   height: 100%;
   float: left;
   overflow: hidden;
-  border-style: solid;
-  border-width: 2px;
-  border-color: rgb(182, 215, 215,0.2);
-  background-color: rgb(182, 215, 215,0.2);
+  color: black;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 .musicNameDisplay {
   font-size: 40px;

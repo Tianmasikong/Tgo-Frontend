@@ -69,7 +69,7 @@ export default defineComponent({
         <div>
           <img src="../../../public/Listen-logos_black.png" alt="" style="width: 200px">
         </div>
-        <div style="height: 50%;margin-top: 10px">
+        <div style="height: 50%;">
           <MusicPlayer :song="musicUrl"
                        :lyric="lyric"
                        :music-name="musicName"
@@ -79,9 +79,9 @@ export default defineComponent({
                        @next="getNextMusicByOrder"
                        @prev="getPrevMusic"
                        ref="music"
-          style="margin-top: 4%"/>
+          style="margin-top: 1%"/>
         </div>
-        <div  style="padding-top: 2%">
+        <div  style="padding-top: 4%">
           <MusicListCard @change="costPlannedAmountChange" ref="card"/>
         </div>
       </el-main>
@@ -96,7 +96,7 @@ export default defineComponent({
   overflow: hidden;
 }
 .index .background-cover {
-  filter: blur(70px);
+  filter: blur(50px);
   position: absolute;
   z-index: -1;
   width: 100%;
