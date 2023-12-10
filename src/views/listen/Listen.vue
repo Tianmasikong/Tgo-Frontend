@@ -67,7 +67,7 @@ export default defineComponent({
           <img v-show="musicPic!=='https://s2.loli.net/2023/11/28/W6bLBdvZn1gjPaY.png'" v-bind:src="musicPic" style="width:100%;height:100%; object-fit: cover; object-position: center center;" alt="">
         </div>
         <div>
-          <img src="../../../public/Listen-logos_black.png" alt="" style="width: 200px">
+          <img src="../../../public/listen.png" alt="" style="width: 70px">
         </div>
         <div style="height: 50%;">
           <MusicPlayer :song="musicUrl"

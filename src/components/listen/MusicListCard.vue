@@ -124,7 +124,7 @@ export default defineComponent({
         } else {
           this.$message({
             type: 'error',
-            message: res.message
+            message: res.data.message
           });
         }
       })
@@ -220,7 +220,7 @@ export default defineComponent({
             height="100%"
             highlight-current-row
             @row-dblclick=setMusic
-            style="width: 100%">
+            style="width: 100%;user-select: none;">
           <el-table-column prop="name" label="歌曲名" width="180"/>
           <el-table-column prop="ar" label="歌手名" width="100"/>
           <el-table-column prop="al" label="专辑"/>
