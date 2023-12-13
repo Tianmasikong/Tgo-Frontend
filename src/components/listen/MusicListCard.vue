@@ -21,12 +21,25 @@ export default defineComponent({
       size: 50,
       musicList: [],
       musics: [],
+      filterMusics: [],
       drawer: false,
       musicListName: '',
-      nowIndex: 0
+      nowIndex: 0,
+      keyword: "",
     }
   },
   methods: {
+    handleSearch() {
+      // 处理搜索框输入变化的逻辑
+      // 使用关键字过滤歌曲
+      const keyword = this.keyword.toLowerCase();
+      this.filterMusics = this.musics.filter(
+          (music) =>
+              music.name.toLowerCase().includes(keyword) ||
+              music.ar.toLowerCase().includes(keyword) ||
+              music.al.toLowerCase().includes(keyword)
+      );
+    },
     getMusicLists() {
       let profile = JSON.parse(localStorage.getItem("profile"));
       if (profile === null || profile === undefined) {
@@ -67,6 +80,7 @@ export default defineComponent({
       };
       musicListCardGetMusicsByListId(config).then(res => {
         this.musics = res.data.result;
+        this.filterMusics = this.musics
         if (this.musics == null) {
           this.$message({
             type: 'error',
@@ -75,7 +89,7 @@ export default defineComponent({
           });
           return;
         }
-        for (let i=0;i<this.musics.length;i++) {
+        for (let i = 0; i < this.musics.length; i++) {
           if (typeof this.musics[i] !== 'string') {
             break;
           }
@@ -215,8 +229,11 @@ export default defineComponent({
           :direction="'ltr'"
           size="30%"
       >
+        <!-- 搜索框 -->
+        <el-input v-model="keyword" placeholder="输入歌手/歌曲/专辑进行搜索" @input="handleSearch"/>
+
         <el-table
-            :data="musics"
+            :data="filterMusics"
             height="100%"
             highlight-current-row
             @row-dblclick=setMusic
