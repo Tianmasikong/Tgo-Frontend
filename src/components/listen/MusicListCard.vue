@@ -112,7 +112,7 @@ export default defineComponent({
             if (ifVIP === 1 || ifVIP === 4) {
               this.$message({
                 type: 'warning',
-                message: '正在试听，开通黑胶会员听整首',
+                message: '正在试听，开通黑胶会员听整首！',
                 duration: 1500
               });
             }
