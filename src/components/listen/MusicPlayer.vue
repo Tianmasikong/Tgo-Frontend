@@ -418,12 +418,12 @@ p {
   position: relative;
   top: 13px;
   height: 4px;
-  background: rgba(238, 229, 255, 1);
+  background: rgba(175, 213, 222, 0.44);
 
 .progress {
   position: absolute;
   height: 100%;
-  background-color: #bc99ff;
+  background-color: rgb(175, 208, 222);
 }
 
 .progress-btn-wrapper {
@@ -442,7 +442,7 @@ p {
   height: 16px;
   border: 3px solid #fff;
   border-radius: 50%;
-  background: #bc99ff;
+  background: rgb(175, 213, 222);
 }
 
 }
@@ -450,7 +450,7 @@ p {
 }
 }
 .time {
-  color: rgb(132, 80, 229);
+  color: rgb(175, 213, 222);
   font-size: 12px;
   width: 110px;
   text-align: left;

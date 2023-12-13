@@ -229,12 +229,17 @@ export default defineComponent({
           :direction="'ltr'"
           size="30%"
       >
+        <template #header>
+          <div class="custom-header">
+            {{musicListName}}
+          </div>
+        </template>
         <!-- 搜索框 -->
         <el-input v-model="keyword" placeholder="输入歌手/歌曲/专辑进行搜索" @input="handleSearch"/>
 
         <el-table
             :data="filterMusics"
-            height="100%"
+            height="95%"
             highlight-current-row
             @row-dblclick=setMusic
             style="width: 100%;user-select: none;">
@@ -255,7 +260,11 @@ export default defineComponent({
   height: 50%;
   margin: auto;
 }
-
+.custom-header {
+  margin-bottom: 0px; /* 设置合适的数值 */
+  padding-bottom: 0px;
+  color: #AFD5DE;
+}
 .card {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19);
   border-width: 0;
@@ -320,4 +329,6 @@ export default defineComponent({
   transform: translate(-50%, -50%);
   z-index: 2;
 }
+
+
 </style>
