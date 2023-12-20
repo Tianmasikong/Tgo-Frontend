@@ -41,8 +41,8 @@
             </span>
           </template>
         </el-dialog>
-        <el-col :span="8" :offset="8" v-show="user.profile.avatarUrl!==''">
-          <el-card>
+        <el-col :span="8" :offset="3" v-show="user.profile.avatarUrl!==''" style="position: center;">
+          <el-card :body-style="{ padding: '0px' }" fit style="width: 1024px; position: center;">
           <img
               :src="user.profile.avatarUrl"
               class="image"
