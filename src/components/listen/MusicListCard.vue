@@ -6,6 +6,7 @@ import {
   musicListCardGetMusicsByListId, musicListCardGetMusicUrl
 } from "@/request/component";
 import {VideoPlay} from "@element-plus/icons-vue";
+import {warningAudio} from "@/constant/video";
 
 
 export default defineComponent({
@@ -136,6 +137,7 @@ export default defineComponent({
             await this.$emit('change', "lyric", tmp.lyric);
           })
         } else {
+          warningAudio.play();
           this.$message({
             type: 'error',
             message: res.data.message
