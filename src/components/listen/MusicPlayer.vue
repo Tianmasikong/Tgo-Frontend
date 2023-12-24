@@ -371,6 +371,7 @@ p {
   overflow: hidden;
   color: black;
   background-color: rgba(255, 255, 255, 0.1);
+  user-select: none;
 }
 .musicNameDisplay {
   font-size: 40px;
