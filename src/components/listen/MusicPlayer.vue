@@ -399,6 +399,7 @@ p {
   justify-content: center;
   align-items: center;
   height: 300px;
+  user-select: none;
 }
 .progress-wrapper {
   display: flex;
